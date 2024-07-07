@@ -9,7 +9,10 @@ const port = process.env.PORT || 3000;
 
 // Маршруты
 const sharesRoute = require('./shares/routes');
-app.use('/', sharesRoute);
+const footerRoute = require('./footer/routes');
+
+app.use('/shares', sharesRoute);
+app.use('/footer', footerRoute);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
