@@ -1,13 +1,19 @@
-const { url, axios, variable } = require('../../config');
+const shares = require('../../db/shares.json');
 
-exports.getSharesData = async () => {
+exports.getSharesData = async (page, limit) => {
     try {
-        const response = await axios.post(url.shares, {
-            instrumentStatus : variable.INSTRUMENT_STATUS_UNSPECIFIED
-        });
-        return response.data;
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const paginatedShares = shares.slice(startIndex, endIndex);
+
+        return {
+            total: shares.length,
+            page,
+            limit,
+            data: paginatedShares
+        };
     } catch (error) {
-        console.log(error)
+        console.log(error);
         throw new Error('Error fetching data from external API');
     }
 };
