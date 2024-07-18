@@ -1,15 +1,15 @@
 const shares = require('../../db/shares.json');
 
-exports.getSharesData = async (page, limit) => {
+exports.getSharesData = async (start, end) => {
     try {
-        const startIndex = (page - 1) * limit;
-        const endIndex = page * limit;
+        const startIndex = start;
+        const endIndex = end;
         const paginatedShares = shares.slice(startIndex, endIndex);
 
         return {
             total: shares.length,
-            page,
-            limit,
+            start,
+            end,
             data: paginatedShares
         };
     } catch (error) {
